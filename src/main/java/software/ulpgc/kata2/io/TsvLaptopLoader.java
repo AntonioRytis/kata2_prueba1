@@ -49,9 +49,25 @@ public class TsvLaptopLoader implements LaptopLoader {
         return new Laptop(
                 fields[0].trim(),
                 fields[1].trim(),
-                Integer.parseInt(fields[2].trim()),
-                Integer.parseInt(fields[3].trim()),
-                Double.parseDouble(fields[4].trim())
+                parseInt(fields[2], "la RAM"),
+                parseInt(fields[3], "el almacenamiento"),
+                parseDouble(fields[4], "el precio")
         );
+    }
+
+    private int parseInt(String value, String column) {
+        try {
+            return Integer.parseInt(value.trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(column + " debe ser un número y es '" + value.trim() + "'");
+        }
+    }
+
+    private double parseDouble(String value, String column) {
+        try {
+            return Double.parseDouble(value.trim());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(column + " debe ser un número y es '" + value.trim() + "'");
+        }
     }
 }
